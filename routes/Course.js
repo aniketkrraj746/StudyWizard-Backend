@@ -4,19 +4,19 @@ const router = express.Router();
 //Course Controllers import
 const {
   createCourse,
-  showAllCourses,
+  getAllCourses,
   getCourseDetails,
 } = require("../controllers/Course");
 //Categories controllers Import
 const {
   createCategory,
-  getAllCategorys,
+  showAllCategories,
   categoryPageDetails,
 } = require("../controllers/Category");
 //Sections controllers import
 const {
   createSection,
-  updatSection,
+  updateSection,
   deleteSection,
 } = require("../controllers/Section");
 //Sub-section Controllers import
@@ -30,7 +30,7 @@ const {
 const {
   createRating,
   getAverageRating,
-  getAllRatingAndReviews,
+  getAllRatingReview,
 } = require("../controllers/RatingAndReview");
 //Import Middlewares
 const {
@@ -40,19 +40,18 @@ const {
   isAdmin,
 } = require("../middlewares/auth");
 
-
 // adding routes
-router.post("/createCourse",auth,isInstructor,createCourse);
-router.post("/addSection",auth,isInstructor,createSection);
-router.post("/updateSection",auth,isInstructor,updatSection);
-router.post("deleteSection",auth,isInstructor,deleteSection);
+router.post("/createCourse", auth, isInstructor, createCourse);
+router.post("/addSection", auth, isInstructor, createSection);
+router.post("/updateSection", auth, isInstructor, updateSection);
+router.post("deleteSection", auth, isInstructor, deleteSection);
 router.post("/updateSubSection", auth, isInstructor, updateSubSection);
 // Delete Sub Section
 router.post("/deleteSubSection", auth, isInstructor, deleteSubSection);
 // Add a Sub Section to a Section
 router.post("/addSubSection", auth, isInstructor, createSubSection);
 // Get all Registered Courses
-router.get("/getAllCourses", showAllCourses);
+router.get("/getAllCourses", getAllCourses);
 // Get Details for a Specific Courses
 router.post("/getCourseDetails", getCourseDetails);
 
@@ -62,7 +61,7 @@ router.post("/getCourseDetails", getCourseDetails);
 // Category can Only be Created by Admin
 // TODO: Put IsAdmin Middleware here
 router.post("/createCategory", auth, isAdmin, createCategory);
-router.get("/showAllCategories", getAllCategorys);
+router.get("/showAllCategories", showAllCategories);
 router.post("/getCategoryPageDetails", categoryPageDetails);
 
 // ********************************************************************************************************
@@ -70,6 +69,6 @@ router.post("/getCategoryPageDetails", categoryPageDetails);
 // ********************************************************************************************************
 router.post("/createRating", auth, isStudent, createRating);
 router.get("/getAverageRating", getAverageRating);
-router.get("/getReviews", getAllRatingAndReviews);
+router.get("/getReviews", getAllRatingReview);
 
 module.exports = router;
