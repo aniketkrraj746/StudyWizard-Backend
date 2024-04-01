@@ -1,6 +1,14 @@
 // const express = require("express");
 const express = require("express");
 const app = express();
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
+
+
+
+
+
 
 // import routes
 const userRoutes = require("./routes/User");
@@ -22,6 +30,7 @@ const PORT = process.env.PORT || 4000;
 database.connect();
 //middleware
 app.use(express.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cookieParser());
 app.use(
   cors({
