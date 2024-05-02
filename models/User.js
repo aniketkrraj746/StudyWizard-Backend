@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
     type :Boolean,
     default:true,
   },
-  additionDetails: {
+  additionalDetails: {
     type: mongoose.Schema.Types.ObjectId, 
     required: true,
     ref: "Profile",
@@ -48,7 +48,7 @@ const userSchema = new mongoose.Schema({
     // required: true,
   },
   token:{
-    type:String,
+    type:String, 
   },
   restePasswordExpires:{
     type:Date,
