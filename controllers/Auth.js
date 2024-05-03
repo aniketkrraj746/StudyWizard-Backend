@@ -94,8 +94,8 @@ exports.signup = async (req, res) => {
       password: hashedPassword,
       accountType: accountType,
       approved: approved,
-      additionDetails: profileDetails._id,
-      image: "",
+      additionalDetails: profileDetails._id,
+      image: ""
     });
 
     return res.status(200).json({

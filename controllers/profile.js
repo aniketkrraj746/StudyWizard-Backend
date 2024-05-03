@@ -21,7 +21,7 @@ exports.updateProfile = async (req, res) => {
 
     // Find the profile by id
     const userDetails = await User.findById(id)
-    const profile = await Profile.findById(userDetails.additionalDetails)
+    const profile = await Profile.findById(userDetails.additionalDetails);
 
     const user = await User.findByIdAndUpdate(id, {
       firstName,
@@ -41,7 +41,7 @@ exports.updateProfile = async (req, res) => {
     // Find the updated user details
     const updatedUserDetails = await User.findById(id)
       .populate("additionalDetails")
-      .exec()
+      .exec();
 
     return res.json({
       success: true,
@@ -59,9 +59,9 @@ exports.updateProfile = async (req, res) => {
 
 exports.deleteAccount = async (req, res) => {
   try {
-    const id = req.user.id
+    const id = req.user._id;
     console.log(id)
-    const user = await User.findById({ _id: id })
+    const user = await User.findById({ _id: _id })
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -70,8 +70,8 @@ exports.deleteAccount = async (req, res) => {
     }
     // Delete Assosiated Profile with the User
     await Profile.findByIdAndDelete({
-      _id: new mongoose.Types.ObjectId(user.additionalDetails),
-    })
+      _id: new mongoose.Types.ObjectId(user.additionalDetails) 
+    });
     for (const courseId of user.courses) {
       await Course.findByIdAndUpdate(
         courseId,
@@ -90,7 +90,7 @@ exports.deleteAccount = async (req, res) => {
     console.log(error)
     res
       .status(500)
-      .json({ success: false, message: "User Cannot be deleted successfully" })
+      .json({ success: false,error:error.message, message: "User Cannot be deleted successfully" })
   }
 }
 
@@ -99,7 +99,7 @@ exports.getAllUserDetails = async (req, res) => {
     const id = req.user.id
     const userDetails = await User.findById(id)
       .populate("additionalDetails")
-      .exec()
+      .exec();
     console.log(userDetails)
     res.status(200).json({
       success: true,
@@ -136,6 +136,7 @@ exports.updateDisplayPicture = async (req, res) => {
       data: updatedProfile,
     })
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: error.message,
@@ -233,6 +234,6 @@ exports.instructorDashboard = async (req, res) => {
     res.status(200).json({ courses: courseData })
   } catch (error) {
     console.error(error)
-    res.status(500).json({ message: "Server Error" })
+    res.status(500).json({ message: "Server Error" }) 
   }
 }
